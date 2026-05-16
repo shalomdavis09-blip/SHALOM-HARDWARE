@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shalom Hardware - Quality Tools & Materials</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>🔨 Shalom Hardware</h1>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#locations">Locations</a></li>
+                <li><a href="#order">Order Now</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Welcome to Shalom Hardware</h1>
+                <p>Quality Hardware Tools & Materials for Every Project</p>
+                <p class="tagline">Father-Son Business | Trusted Since Day One</p>
+                <button class="btn btn-primary" onclick="document.getElementById('order').scrollIntoView({behavior: 'smooth'})">Order Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2>About Shalom Hardware</h2>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Our Story</h3>
+                    <p>Shalom Hardware is a proud father-son business dedicated to providing high-quality hardware tools and materials to customers across Kenya and the world. With over a decade of experience, we've built our reputation on reliability, quality, and exceptional customer service.</p>
+                    
+                    <h3>Our Mission</h3>
+                    <p>To make quality hardware accessible to everyone, whether you're a professional contractor, DIY enthusiast, or home builder. We believe in fair pricing, honest dealings, and going the extra mile for our customers.</p>
+                    
+                    <h3>Why Choose Us?</h3>
+                    <ul>
+                        <li>✅ Genuine, high-quality products</li>
+                        <li>✅ Competitive pricing</li>
+                        <li>✅ Worldwide delivery available</li>
+                        <li>✅ Expert advice and support</li>
+                        <li>✅ Multiple payment options</li>
+                        <li>✅ Fast and reliable service</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="products" class="products">
+        <div class="container">
+            <h2>Our Products</h2>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Locations Section -->
+    <section id="locations" class="locations">
+        <div class="container">
+            <h2>Our Locations</h2>
+            <div class="locations-grid">
+                <div class="location-card">
+                    <h3>📍 Kayole Junction Branch</h3>
+                    <p><strong>Address:</strong> Kayole Junction, Nairobi, Kenya</p>
+                    <p><strong>Phone:</strong> +254 (Contact via email)</p>
+                    <p><strong>Email:</strong> shalomdavis@gmail.com</p>
+                    <p><strong>Hours:</strong> Mon - Sat: 8 AM - 6 PM | Sun: 9 AM - 5 PM</p>
+                    <p>Visit us for over-the-counter purchases, expert advice, and quick pickups.</p>
+                </div>
+                
+                <div class="location-card">
+                    <h3>📍 Koma Branch</h3>
+                    <p><strong>Address:</strong> Koma, Kenya</p>
+                    <p><strong>Phone:</strong> +254 (Contact via email)</p>
+                    <p><strong>Email:</strong> shalomdavis@gmail.com</p>
+                    <p><strong>Hours:</strong> Mon - Sat: 8 AM - 6 PM | Sun: 10 AM - 4 PM</p>
+                    <p>Extended warehouse for bulk orders and storage.</p>
+                </div>
+
+                <div class="location-card">
+                    <h3>🌍 Worldwide Delivery</h3>
+                    <p><strong>Service:</strong> International Shipping</p>
+                    <p><strong>Delivery:</strong> Available to most countries</p>
+                    <p><strong>Shipping Fees:</strong> Negotiable based on weight and destination</p>
+                    <p><strong>Contact:</strong> Email shalomdavis@gmail.com for shipping quotes</p>
+                    <p>Fast, reliable, and tracked delivery worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Order Section -->
+    <section id="order" class="order">
+        <div class="container">
+            <h2>Place Your Order</h2>
+            
+            <div class="order-container">
+                <!-- Order Form -->
+                <div class="order-form-section">
+                    <h3>Order Details</h3>
+                    <form id="orderForm" onsubmit="handleOrderSubmit(event)">
+                        <div class="form-group">
+                            <label>Customer Name *</label>
+                            <input type="text" id="customerName" required placeholder="Full Name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email Address *</label>
+                            <input type="email" id="customerEmail" required placeholder="your@email.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" id="customerPhone" required placeholder="+254712345678 or 0712345678">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Select Product *</label>
+                            <select id="productSelect" required onchange="updatePrice()">
+                                <option value="">-- Choose a Product --</option>
+                                <option value="hammer-5kg" data-price="1500">Professional Hammer (5kg) - KES 1,500</option>
+                                <option value="drill-set" data-price="3500">Cordless Drill Set - KES 3,500</option>
+                                <option value="screwdriver-set" data-price="800">Screwdriver Set (12pc) - KES 800</option>
+                                <option value="saw-blade" data-price="2000">Saw Blade Set - KES 2,000</option>
+                                <option value="socket-set" data-price="2500">Socket Set (40pc) - KES 2,500</option>
+                                <option value="measuring-tape" data-price="500">Measuring Tape (5m) - KES 500</option>
+                                <option value="level-tool" data-price="1200">Digital Level - KES 1,200</option>
+                                <option value="tool-box" data-price="4000">Complete Tool Box - KES 4,000</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Quantity *</label>
+                            <input type="number" id="quantity" value="1" min="1" max="100" required onchange="updatePrice()" oninput="updatePrice()">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Shipping Address *</label>
+                            <textarea id="shippingAddress" required placeholder="Complete shipping address" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Country/Region *</label>
+                            <select id="country" required>
+                                <option value="">-- Select Country --</option>
+                                <option value="Kenya">Kenya</option>
+                                <option value="Uganda">Uganda</option>
+                                <option value="Tanzania">Tanzania</option>
+                                <option value="Rwanda">Rwanda</option>
+                                <option value="Ethiopia">Ethiopia</option>
+                                <option value="USA">United States</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="Germany">Germany</option>
+                                <option value="Australia">Australia</option>
+                                <option value="Canada">Canada</option>
+                                <option value="Other">Other (Negotiable)</option>
+                            </select>
+                        </div>
+
+                        <input type="hidden" id="selectedPaymentMethod" value="mpesa">
+
+                        <button type="submit" class="btn btn-success">Submit Order</button>
+                    </form>
+                </div>
+
+                <!-- Order Summary & Payment -->
+                <div class="order-summary-section">
+                    <!-- Order Summary -->
+                    <div class="order-summary">
+                        <h3>Order Summary</h3>
+                        <div class="summary-item">
+                            <span>Product Price:</span>
+                            <span id="productPrice">0</span> KES
+                        </div>
+                        <div class="summary-item">
+                            <span>Quantity:</span>
+                            <span id="quantityDisplay">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span>Subtotal:</span>
+                            <span id="subtotal">0</span> KES
+                        </div>
+                        <div class="summary-item">
+                            <span>Shipping:</span>
+                            <span>TBD*</span>
+                        </div>
+                        <div class="summary-total">
+                            <span>Total (excl. shipping):</span>
+                            <strong><span id="totalPrice">0</span> KES</strong>
+                        </div>
+                        <small>*Shipping fees will be calculated based on location and weight. Contact us for exact quote.</small>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <div class="payment-section">
+                        <h3>Payment Methods</h3>
+                        
+                        <div class="payment-method" onclick="selectPayment('mpesa')">
+                            <input type="radio" name="payment" value="mpesa" checked>
+                            <label>📱 M-Pesa</label>
+                        </div>
+
+                        <div class="payment-method" onclick="selectPayment('bank')">
+                            <input type="radio" name="payment" value="bank">
+                            <label>🏦 Bank Transfer</label>
+                        </div>
+
+                        <div class="payment-method" onclick="selectPayment('paypal')">
+                            <input type="radio" name="payment" value="paypal">
+                            <label>🌐 PayPal</label>
+                        </div>
+
+                        <div class="payment-method" onclick="selectPayment('crypto')">
+                            <input type="radio" name="payment" value="crypto">
+                            <label>₿ Cryptocurrency</label>
+                        </div>
+
+                        <div class="payment-method" onclick="selectPayment('cod')">
+                            <input type="radio" name="payment" value="cod">
+                            <label>💵 Cash on Delivery</label>
+                        </div>
+
+                        <div id="paymentDetails" class="payment-details"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Get In Touch</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <div class="info-item">
+                        <strong>📧 Email:</strong>
+                        <p>shalomdavis@gmail.com</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>📍 Main Location:</strong>
+                        <p>Kayole Junction, Nairobi, Kenya</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>📍 Secondary Location:</strong>
+                        <p>Koma, Kenya</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>🚚 Delivery:</strong>
+                        <p>Worldwide (Negotiable fees)</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>👨‍💼 Owner:</strong>
+                        <p>shalomdavis@gmail.com</p>
+                    </div>
+                </div>
+
+                <form class="contact-form" onsubmit="handleContactSubmit(event)">
+                    <h3>Send us a Message</h3>
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Shalom Hardware. All rights reserved.</p>
+            <p>Owner: shalomdavis@gmail.com | Locations: Kayole Junction & Koma, Nairobi, Kenya</p>
+            <p>Worldwide Delivery Available | Quality Hardware Since Day One</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
