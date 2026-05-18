@@ -187,7 +187,7 @@ PAYMENT METHOD: ${selectedPaymentMethod.toUpperCase()}
 BUSINESS DETAILS:
 Owner: shalomdavis@gmail.com
 Locations: Kayole Junction & Koma, Nairobi, Kenya
-Worldwide Delivery: Available (Negotiable fees)
+Nationwide Delivery: Available (Negotiable fees)
 
 =========================================
     `;
