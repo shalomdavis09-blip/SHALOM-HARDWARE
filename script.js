@@ -98,7 +98,7 @@ function showPaymentDetails(method) {
                 <p><strong>Till Number:</strong> 4482676</p>
                 <p><strong>Business Name:</strong> Shalom Hardware</p>
                 <p>Send payment to the till number above and provide your reference number in the order confirmation email.</p>
-                <p><strong>Email confirmation to:</strong> shalomdavis@gmail.com</p>
+                <p><strong>Email confirmation to:</strong> shajoshardware@gmail.com</p>
             `;
             break;
         case 'bank':
