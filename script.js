@@ -53,6 +53,21 @@ function loadProducts() {
     });
 }
 
+// Search products function
+function searchProducts() {
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    const productCards = document.querySelectorAll('.product-card');
+
+    productCards.forEach(card => {
+        const productName = card.querySelector('h3').textContent.toLowerCase();
+        if (productName.includes(searchInput)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
+}
+
 // Update price based on product selection and quantity
 function updatePrice() {
     const productSelect = document.getElementById('productSelect');
