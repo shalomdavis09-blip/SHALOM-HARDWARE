@@ -33,6 +33,9 @@ const products = [
     { id: 'hdpe-pipes-fittings', name: 'HDPE Pipes & Fittings (All Sizes)', price: 0, emoji: '🔶' }
 ];
 
+// Email configuration - SINGLE SOURCE OF TRUTH
+const BUSINESS_EMAIL = 'shajoshardware@gmail.com';
+
 // Initialize products grid
 function loadProducts() {
     const productsGrid = document.getElementById('productsGrid');
@@ -113,7 +116,7 @@ function showPaymentDetails(method) {
                 <p><strong>Till Number:</strong> 4482676</p>
                 <p><strong>Business Name:</strong> Shalom Hardware</p>
                 <p>Send payment to the till number above and provide your reference number in the order confirmation email.</p>
-                <p><strong>Email confirmation to:</strong> shajoshardware@gmail.com</p>
+                <p><strong>Email confirmation to:</strong> ${BUSINESS_EMAIL}</p>
             `;
             break;
         case 'bank':
@@ -122,13 +125,13 @@ function showPaymentDetails(method) {
                 <p><strong>Bank:</strong> (To be provided)</p>
                 <p><strong>Account Name:</strong> Shalom Hardware</p>
                 <p><strong>Account Number:</strong> (To be provided)</p>
-                <p>Send your bank slip to shalomdavis@gmail.com with order details.</p>
+                <p>Send your bank slip to ${BUSINESS_EMAIL} with order details.</p>
             `;
             break;
         case 'paypal':
             details = `
                 <h4>PayPal Payment</h4>
-                <p><strong>Email:</strong> shalomdavis@gmail.com</p>
+                <p><strong>Email:</strong> ${BUSINESS_EMAIL}</p>
                 <p>Click the PayPal link in your confirmation email to complete the payment.</p>
                 <p>You will receive an invoice with payment instructions.</p>
             `;
@@ -137,7 +140,7 @@ function showPaymentDetails(method) {
             details = `
                 <h4>Cryptocurrency Payment</h4>
                 <p><strong>Accepted:</strong> Bitcoin (BTC), Ethereum (ETH)</p>
-                <p>Contact shalomdavis@gmail.com for crypto payment details.</p>
+                <p>Contact ${BUSINESS_EMAIL} for crypto payment details.</p>
                 <p>We will provide wallet addresses for secure transactions.</p>
             `;
             break;
@@ -179,10 +182,12 @@ function handleOrderSubmit(event) {
         return;
     }
 
+    const orderID = generateOrderID();
+
     // Create order summary
     const orderSummary = `
 ========== ORDER CONFIRMATION ==========
-Order ID: ${generateOrderID()}
+Order ID: ${orderID}
 Date: ${new Date().toLocaleString()}
 
 CUSTOMER INFORMATION:
@@ -200,7 +205,8 @@ Total Price: KES ${totalPrice}
 PAYMENT METHOD: ${selectedPaymentMethod.toUpperCase()}
 
 BUSINESS DETAILS:
-Owner: shalomdavis@gmail.com
+Owner: JOSHUA MUIA
+Contact: ${BUSINESS_EMAIL}
 Locations: Kayole Junction & Koma, Nairobi, Kenya
 Nationwide Delivery: Available (Negotiable fees)
 
@@ -212,8 +218,11 @@ Nationwide Delivery: Available (Negotiable fees)
     // Show confirmation
     alert(`Order submitted successfully!\n\n${orderSummary}\n\nA confirmation email will be sent to ${customerEmail}`);
 
-    // Send email notification (simulated)
-    sendOrderNotification(customerEmail, customerName, orderSummary);
+    // Send email notifications
+    sendOrderNotification(customerEmail, customerName, orderSummary, orderID);
+    
+    // Also send to business email
+    sendOrderNotificationToAdmin(customerName, customerEmail, orderSummary, orderID);
 
     // Reset form
     document.getElementById('orderForm').reset();
@@ -225,13 +234,92 @@ function generateOrderID() {
     return 'SH' + Date.now() + Math.random().toString(36).substr(2, 9).toUpperCase();
 }
 
-// Simulate sending order notification email
-function sendOrderNotification(email, name, orderDetails) {
-    console.log(`Email sent to ${email}`);
-    console.log(`Order notification:\n${orderDetails}`);
-    
-    // In a real application, this would send to a backend server
-    // Example: fetch('/api/send-order-email', { method: 'POST', body: JSON.stringify({ email, orderDetails }) })
+// Send order notification to customer
+function sendOrderNotification(customerEmail, customerName, orderDetails, orderID) {
+    const emailData = {
+        to: customerEmail,
+        subject: `Order Confirmation - Shalom Hardware Order #${orderID}`,
+        body: `
+Hello ${customerName},
+
+Thank you for your order with Shalom Hardware!
+
+${orderDetails}
+
+We have received your order and will process it shortly.
+You will receive an email confirmation at ${customerEmail} with payment details.
+
+Best regards,
+Shalom Hardware Team
+${BUSINESS_EMAIL}
+        `
+    };
+
+    // Send to backend
+    fetch('/.netlify/functions/send-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            ...emailData,
+            type: 'customer_confirmation'
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Customer confirmation email sent to ' + customerEmail);
+        } else {
+            console.error('Failed to send customer email');
+        }
+    })
+    .catch(error => {
+        console.error('Error sending customer email:', error);
+    });
+}
+
+// Send order notification to admin
+function sendOrderNotificationToAdmin(customerName, customerEmail, orderDetails, orderID) {
+    const emailData = {
+        to: BUSINESS_EMAIL,
+        subject: `NEW ORDER RECEIVED - Order #${orderID} from ${customerName}`,
+        body: `
+IMPORTANT: NEW ORDER RECEIVED!
+
+Customer: ${customerName}
+Email: ${customerEmail}
+
+${orderDetails}
+
+Please review and process this order.
+Contact the customer at ${customerEmail} or via your business channels.
+
+---
+Automated Order Notification from Shalom Hardware Website
+        `
+    };
+
+    // Send to backend
+    fetch('/.netlify/functions/send-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            ...emailData,
+            type: 'admin_notification'
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Order notification sent to admin: ' + BUSINESS_EMAIL);
+        } else {
+            console.error('Failed to send admin notification');
+        }
+    })
+    .catch(error => {
+        console.error('Error sending admin notification:', error);
+    });
 }
 
 // Handle contact form submission
@@ -255,15 +343,42 @@ Submitted at: ${new Date().toLocaleString()}
     console.log(contactMessage);
     alert(`Thank you ${name}! Your message has been received. We'll get back to you at ${email} soon.`);
     
-    // Send to admin email
-    sendContactEmail(contactMessage);
+    // Send to business email
+    sendContactEmail(name, email, message, contactMessage);
     
     event.target.reset();
 }
 
-// Simulate sending contact email
-function sendContactEmail(message) {
-    console.log(`Contact message to be sent to shalomdavis@gmail.com:\n${message}`);
+// Send contact email
+function sendContactEmail(name, email, message, fullMessage) {
+    const emailData = {
+        to: BUSINESS_EMAIL,
+        subject: `New Contact Form Submission from ${name}`,
+        body: fullMessage
+    };
+
+    // Send to backend
+    fetch('/.netlify/functions/send-email', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            ...emailData,
+            reply_to: email,
+            type: 'contact_form'
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            console.log('Contact message sent to: ' + BUSINESS_EMAIL);
+        } else {
+            console.error('Failed to send contact email');
+        }
+    })
+    .catch(error => {
+        console.error('Error sending contact email:', error);
+    });
 }
 
 // Initialize on page load
