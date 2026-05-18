@@ -1,13 +1,36 @@
 // Sample products data
 const products = [
-    { id: 'hammer-5kg', name: 'Professional Hammer (5kg)', price: 1500, emoji: '🔨' },
-    { id: 'drill-set', name: 'Cordless Drill Set', price: 3500, emoji: '⚙️' },
-    { id: 'screwdriver-set', name: 'Screwdriver Set (12pc)', price: 800, emoji: '🪛' },
-    { id: 'saw-blade', name: 'Saw Blade Set', price: 2000, emoji: '🪚' },
-    { id: 'socket-set', name: 'Socket Set (40pc)', price: 2500, emoji: '🔧' },
-    { id: 'measuring-tape', name: 'Measuring Tape (5m)', price: 500, emoji: '📏' },
-    { id: 'level-tool', name: 'Digital Level', price: 1200, emoji: '⚖️' },
-    { id: 'tool-box', name: 'Complete Tool Box', price: 4000, emoji: '🧰' }
+    // Locks & Latches
+    { id: 'yale-night-latch', name: 'Yale Night Latch', price: 2500, emoji: '🔐' },
+    { id: 'union-key-locks', name: 'Union Key Locks', price: 1800, emoji: '🔒' },
+    { id: 'moment-locks', name: 'Moment Locks', price: 1000, emoji: '🔒' },
+    { id: 'gjs-key-locks', name: 'GJS Key Locks', price: 1200, emoji: '🔒' },
+    { id: 'moment-night-latch', name: 'Moment Night Latch', price: 1000, emoji: '🔐' },
+    { id: 'wista-steel-locks', name: 'Wista Steel Locks', price: 2500, emoji: '🔐' },
+    
+    // Hinges & Padlocks
+    { id: 'hydraulic-malpha-hinges', name: 'Hydraulic Malpha Hinges', price: 150, emoji: '🔗' },
+    { id: 'mindy-40-padlocks', name: 'Mindy 40 Padlocks', price: 500, emoji: '🔐' },
+    { id: 'padlock-50', name: 'Padlock 50', price: 600, emoji: '🔐' },
+    { id: 'padlock-60', name: 'Padlock 60', price: 700, emoji: '🔐' },
+    { id: 'padlock-70', name: 'Padlock 70', price: 800, emoji: '🔐' },
+    
+    // Rolls & Abrasives
+    { id: 'lipping-rolls', name: 'Lipping Rolls', price: 1000, emoji: '🔄' },
+    { id: 'sand-paper-rolls', name: 'Sand Paper Rolls', price: 1500, emoji: '📋' },
+    { id: 'flap-discs', name: 'Flap Discs', price: 100, emoji: '💿' },
+    { id: 'diamond-disc-4', name: 'Diamond Disc 4"', price: 400, emoji: '💿' },
+    { id: 'diamond-disc-9', name: 'Diamond Cutting Disc 9"', price: 1000, emoji: '💿' },
+    
+    // PPR Pipes
+    { id: 'ppr-pipes-4-heavy', name: 'PPR Pipes 4" Heavy', price: 1100, emoji: '🔶' },
+    { id: 'ppr-pipes-3', name: 'PPR Pipes 3"', price: 500, emoji: '🔶' },
+    { id: 'ppr-pipes-2', name: 'PPR Pipes 2"', price: 400, emoji: '🔶' },
+    { id: 'ppr-pipes-1-5', name: 'PPR Pipes 1½"', price: 350, emoji: '🔶' },
+    { id: 'ppr-pipes-1-25', name: 'PPR Pipes 1¼"', price: 300, emoji: '🔶' },
+    { id: 'ppr-pipes-pn16', name: 'PPR Pipes PN 16', price: 0, emoji: '🔶' },
+    { id: 'ppr-pipes-pn20', name: 'PPR Pipes PN 20', price: 0, emoji: '🔶' },
+    { id: 'hdpe-pipes-fittings', name: 'HDPE Pipes & Fittings (All Sizes)', price: 0, emoji: '🔶' }
 ];
 
 // Initialize products grid
@@ -23,7 +46,7 @@ function loadProducts() {
             <div class="product-info">
                 <h3>${product.name}</h3>
                 <p>High-quality hardware product from Shalom Hardware</p>
-                <div class="product-price">KES ${product.price.toLocaleString()}</div>
+                <div class="product-price">${product.price > 0 ? 'KES ' + product.price.toLocaleString() : 'Price on Request'}</div>
             </div>
         `;
         productsGrid.appendChild(productCard);
